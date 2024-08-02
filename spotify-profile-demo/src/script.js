@@ -6,8 +6,8 @@ if (!code) {
     redirectToAuthCodeFlow(clientId);
 } else {
     const accessToken = await getAccessToken(clientId, code);
-    const currentlyPlayingData = await fetchProfile(accessToken);
-    populateUI(currentlyPlayingData);
+    updateCurrentlyPlaying(accessToken);
+    setInterval(() => updateCurrentlyPlaying(accessToken), 1000);
 }
 
 
@@ -98,4 +98,9 @@ async function populateUI(profile) {
     document.getElementById("timeline").max = duration;
     document.getElementById("timeline").value = progress;
     document.getElementById("playlist-name").textContent = playlistName;
+}
+
+async function updateCurrentlyPlaying(token) {
+    const currentlyPlayingData = await fetchProfile(token);
+    populateUI(currentlyPlayingData);
 }
