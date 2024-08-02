@@ -13,5 +13,8 @@
   },
   "vite": {
     "base": "/spotify-profile-demo/"
+  },
+  "dependencies": {
+    "esbuild": "^0.23.0"
   }
 }
