@@ -6,8 +6,8 @@ if (!code) {
     redirectToAuthCodeFlow(clientId);
 } else {
     const accessToken = await getAccessToken(clientId, code);
-    const profile = await fetchProfile(accessToken);
-    populateUI(profile);
+    const currentlyPlayingData = await fetchProfile(accessToken);
+    populateUI(currentlyPlayingData);
 }
 
 
@@ -21,7 +21,7 @@ export async function redirectToAuthCodeFlow(clientId) {
     params.append("client_id", clientId);
     params.append("response_type", "code");
     params.append("redirect_uri", "http://localhost:5173/callback");
-    params.append("scope", "user-read-private user-read-email");
+    params.append("scope", "user-read-private user-read-email user-read-currently-playing");
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
 
@@ -73,24 +73,35 @@ async function fetchProfile(token) {
         method: "GET", headers: { Authorization: `Bearer ${token}` }
     });
 
+    const currentlyPlaying = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
+        method: "GET", headers: { Authorization: `Bearer ${token}` }
+    });
+
     const profile = await result.json();
     console.log(profile); // Profile data logs to console
+    const currentlyPlayingData = await currentlyPlaying.json();
+    console.log(currentlyPlayingData); // Currently playing data logs to console
 
-    return profile;
+    return currentlyPlayingData;
 }
 
-function populateUI(profile) {
-    document.getElementById("displayName").innerText = profile.display_name;
-    if (profile.images[0]) {
-        const profileImage = new Image(200, 200);
-        profileImage.src = profile.images[0].url;
-        document.getElementById("avatar").appendChild(profileImage);
-        document.getElementById("imgUrl").innerText = profile.images[0].url;
+async function populateUI(profile) {
+    if (!profile || !profile.item || !profile.item.album || !profile.item.artists) {
+        console.error("Invalid profile data", profile);
+        return;
     }
-    document.getElementById("id").innerText = profile.id;
-    document.getElementById("email").innerText = profile.email;
-    document.getElementById("uri").innerText = profile.uri;
-    document.getElementById("uri").setAttribute("href", profile.external_urls.spotify);
-    document.getElementById("url").innerText = profile.href;
-    document.getElementById("url").setAttribute("href", profile.href);
+
+    const albumCover = profile.item.album.images[0]?.url || '';
+    const artistNames = profile.item.artists.map(artist => artist.name).join(", ");
+    const backgroundImage = profile.item.album.images[0]?.url || '';
+    const progress = profile.progress_ms || 0;
+    const duration = profile.item.duration_ms || 0;
+    const playlistName = profile.context?.href || '';
+
+    document.getElementById("album-cover").src = albumCover;
+    document.getElementById("artist-names").textContent = artistNames;
+    document.body.style.backgroundImage = `url(${backgroundImage})`;
+    document.getElementById("timeline").max = duration;
+    document.getElementById("timeline").value = progress;
+    document.getElementById("playlist-name").textContent = playlistName;
 }
