@@ -1,0 +1,30 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+.item {
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+#timeline {
+    grid-column: 1 / span 3;
+    margin: 5vh 5vh;
+    background-color: #fff;
+    padding: 20px;
+}
+
+#artist-names{
+    font-size: 15vh;
+    font-weight: 900;
+    margin-left: 5vh;
+}
+
+#album-cover{
+    width: 100%;
+    height: auto;
+    margin-left: 5vh;
+    margin-top: 10vh;
+}

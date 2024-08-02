@@ -69,16 +69,10 @@ export async function getAccessToken(clientId, code) {
 }
 
 async function fetchProfile(token) {
-    const result = await fetch("https://api.spotify.com/v1/me", {
-        method: "GET", headers: { Authorization: `Bearer ${token}` }
-    });
-
     const currentlyPlaying = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
         method: "GET", headers: { Authorization: `Bearer ${token}` }
     });
 
-    const profile = await result.json();
-    console.log(profile); // Profile data logs to console
     const currentlyPlayingData = await currentlyPlaying.json();
     console.log(currentlyPlayingData); // Currently playing data logs to console
 
@@ -100,7 +94,7 @@ async function populateUI(profile) {
 
     document.getElementById("album-cover").src = albumCover;
     document.getElementById("artist-names").textContent = artistNames;
-    document.body.style.backgroundImage = `url(${backgroundImage})`;
+    // document.body.style.backgroundImage = `url(${backgroundImage})`;
     document.getElementById("timeline").max = duration;
     document.getElementById("timeline").value = progress;
     document.getElementById("playlist-name").textContent = playlistName;
