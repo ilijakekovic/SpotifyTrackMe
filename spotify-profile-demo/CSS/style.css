@@ -17,7 +17,7 @@
 }
 
 #artist-names{
-    font-size: 10vh;
+    font-size: 6vh;
     margin-left: 5vh;
 }
 
@@ -34,3 +34,16 @@
     font-weight: 700;
     font-style: normal;
   }
+
+.montserrat-500 {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+#song-name{
+    font-size: 8vh;
+    margin-left: 5vh;
+    grid-column: 1 / span -1;
+}

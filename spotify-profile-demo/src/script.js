@@ -91,13 +91,16 @@ async function populateUI(profile) {
     const progress = profile.progress_ms || 0;
     const duration = profile.item.duration_ms || 0;
     const playlistName = profile.context?.href || '';
+    const name = profile.item.name || '';
+    console.log(albumCover, artistNames, backgroundImage, progress, duration, playlistName, name);
 
     document.getElementById("album-cover").src = albumCover;
     document.getElementById("artist-names").textContent = artistNames;
     // document.body.style.backgroundImage = `url(${backgroundImage})`;
     document.getElementById("timeline").max = duration;
     document.getElementById("timeline").value = progress;
-    document.getElementById("playlist-name").textContent = playlistName;
+    //document.getElementById("playlist-name").textContent = playlistName;
+    document.getElementById("song-name").textContent = name;
 }
 
 async function updateCurrentlyPlaying(token) {
