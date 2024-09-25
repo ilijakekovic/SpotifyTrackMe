@@ -97,7 +97,25 @@ function populateUI(profile) {
     document.getElementById("timeline").max = duration;
     document.getElementById("timeline").value = progress;
     //document.getElementById("playlist-name").textContent = playlistName;
+    document.getElementById("song-name").textContent = name;    
+    document.getElementById("artist-names").textContent = artistNames;
+    // document.body.style.backgroundImage = `url(${backgroundImage})`;
+    document.getElementById("timeline").max = duration;
+    document.getElementById("timeline").value = progress;
+    //document.getElementById("playlist-name").textContent = playlistName;
     document.getElementById("song-name").textContent = name;
+    
+    albumCoverElement.onload = function() {
+        const averageColor = getAverageColorFromImageElement(albumCoverElement);
+        console.log('Average Color:', averageColor);
+        document.body.style.backgroundColor = `rgb(${averageColor.r}, ${averageColor.g}, ${averageColor.b})`;
+    };
+    
+    if (albumCoverElement.complete) {
+        const averageColor = getAverageColorFromImageElement(albumCoverElement);
+        console.log('Average Color:', averageColor);
+        document.body.style.backgroundColor = `rgb(${averageColor.r}, ${averageColor.g}, ${averageColor.b})`;
+    }
 
     albumCoverElement.onload = function() {
         const averageColor = getAverageColorFromImageElement(albumCoverElement);
@@ -109,7 +127,13 @@ function populateUI(profile) {
         const averageColor = getAverageColorFromImageElement(albumCoverElement);
         console.log('Average Color:', averageColor);
         document.body.style.backgroundColor = `rgb(${averageColor.r}, ${averageColor.g}, ${averageColor.b})`;
+        const complementaryColor = getComplementaryColor(averageColor);
+        console.log('Complementary Color:', complementaryColor);
+        document.getElementById("song-name").style.color = `rgb(${complementaryColor.r}, ${complementaryColor.g}, ${complementaryColor.b})`;
+        document.getElementById("artist-names").style.color = `rgb(${complementaryColor.r}, ${complementaryColor.g}, ${complementaryColor.b})`;
     }
+
+
 }
 
 async function updateCurrentlyPlaying(token) {
@@ -158,5 +182,13 @@ function getAverageColorFromImageElement(imgElement) {
         console.error('Error getting image data:', e);
         return { r: 0, g: 0, b: 0 };
     }
+}
+
+function getComplementaryColor(color) {
+    return {
+        r: 255 - color.r,
+        g: 255 - color.g,
+        b: 255 - color.b
+    };
 }
   
