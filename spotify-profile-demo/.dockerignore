@@ -1,0 +1,29 @@
+# flyctl launch added from spotify-profile-demo\.gitignore
+# .gitignore
+spotify-profile-demo\**\.env
+
+# Logs
+spotify-profile-demo\**\logs
+spotify-profile-demo\**\*.log
+spotify-profile-demo\**\npm-debug.log*
+spotify-profile-demo\**\yarn-debug.log*
+spotify-profile-demo\**\yarn-error.log*
+spotify-profile-demo\**\pnpm-debug.log*
+spotify-profile-demo\**\lerna-debug.log*
+
+spotify-profile-demo\**\node_modules
+spotify-profile-demo\**\dist
+spotify-profile-demo\**\dist-ssr
+spotify-profile-demo\**\*.local
+
+# Editor directories and files
+spotify-profile-demo\**\.vscode\*
+!spotify-profile-demo\**\.vscode\extensions.json
+spotify-profile-demo\**\.idea
+spotify-profile-demo\**\.DS_Store
+spotify-profile-demo\**\*.suo
+spotify-profile-demo\**\*.ntvs*
+spotify-profile-demo\**\*.njsproj
+spotify-profile-demo\**\*.sln
+spotify-profile-demo\**\*.sw?
+fly.toml

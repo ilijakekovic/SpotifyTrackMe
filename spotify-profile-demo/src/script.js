@@ -71,15 +71,53 @@ export async function getAccessToken(clientId, code) {
 }
 
 async function fetchProfile(token) {
-    const currentlyPlaying = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
-        method: "GET", headers: { Authorization: `Bearer ${token}` }
+    const response = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` }
     });
-
-    const currentlyPlayingData = await currentlyPlaying.json();
+  
+    if (response.status === 401) {
+      console.error('Unauthorized: Access token may be invalid or expired.');
+      const newToken = await refreshAccessToken();
+      if (newToken) {
+        return fetchProfile(newToken); // Retry with new token
+      }
+      return null;
+    }
+  
+    if (!response.ok) {
+      console.error('Failed to fetch currently playing track:', response.statusText);
+      return null;
+    }
+  
+    const currentlyPlayingData = await response.json();
     console.log(currentlyPlayingData); // Currently playing data logs to console
-
+  
     return currentlyPlayingData;
-}
+  }
+  
+  // Function to refresh access token
+  async function refreshAccessToken() {
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Basic ' + btoa(`${clientId}:${clientSecret}`)
+      },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken
+      })
+    });
+  
+    if (!response.ok) {
+      console.error('Failed to refresh access token:', response.statusText);
+      return null;
+    }
+  
+    const data = await response.json();
+    return data.access_token;
+  }
 
 function populateUI(profile) {
     const albumCover = profile.item.album.images[0].url || '';
@@ -190,4 +228,3 @@ function getComplementaryColor(color) {
         b: 255 - color.b
     };
 }
-  
