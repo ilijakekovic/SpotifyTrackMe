@@ -2,6 +2,8 @@ const clientId = "a75a9620a0fa41d48ddf77bd91b3b49b";
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 
+
+
 if (!code) {
     redirectToAuthCodeFlow(clientId);
 } else {
@@ -93,16 +95,8 @@ function populateUI(profile) {
     albumCoverElement.crossOrigin = "anonymous"; // Set crossOrigin
     albumCoverElement.src = albumCover;
     document.getElementById("artist-names").textContent = artistNames;
-    // document.body.style.backgroundImage = `url(${backgroundImage})`;
     document.getElementById("timeline").max = duration;
     document.getElementById("timeline").value = progress;
-    //document.getElementById("playlist-name").textContent = playlistName;
-    document.getElementById("song-name").textContent = name;    
-    document.getElementById("artist-names").textContent = artistNames;
-    // document.body.style.backgroundImage = `url(${backgroundImage})`;
-    document.getElementById("timeline").max = duration;
-    document.getElementById("timeline").value = progress;
-    //document.getElementById("playlist-name").textContent = playlistName;
     document.getElementById("song-name").textContent = name;
     
     albumCoverElement.onload = function() {
@@ -131,6 +125,11 @@ function populateUI(profile) {
         console.log('Complementary Color:', complementaryColor);
         document.getElementById("song-name").style.color = `rgb(${complementaryColor.r}, ${complementaryColor.g}, ${complementaryColor.b})`;
         document.getElementById("artist-names").style.color = `rgb(${complementaryColor.r}, ${complementaryColor.g}, ${complementaryColor.b})`;
+        let timeline = document.getElementById("timeline");
+        //set the color of the timeline to the complementary color
+        timeline.style.background = `linear-gradient(to right, rgb(${complementaryColor.r}, ${complementaryColor.g}, ${complementaryColor.b}), rgb(${complementaryColor.r}, ${complementaryColor.g}, ${complementaryColor.b}))`;
+        //set the color of the timeline thumb to the complementary color
+        timeline.style.setProperty('--webkit-slider-thumb-color', `rgb(${complementaryColor.r}, ${complementaryColor.g}, ${complementaryColor.b})`);
     }
 
 
