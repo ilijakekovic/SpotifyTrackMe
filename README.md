@@ -14,14 +14,15 @@ Spotify Track Me is a tool to track your Spotify listening habits and generate i
     ```
 2. Install dependencies
     ```sh
-    cd SpotifyTrackMe
+    cd spotify-profile-demo
     npm install
     ```
 
 ## Usage
 1. Start the application
     ```sh
-    npm start
+    cd spotify-profile-demo
+    npm run dev
     ```
 2. Open your browser and navigate to `http://localhost:3000`
 
