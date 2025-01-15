@@ -8,13 +8,10 @@ export default defineConfig({
     build: {
         target: 'esnext' // or 'es2022' to support top-level await
     },
-    // server:{
-    //     watch:{
-    //         usePolling: true
-    //     },
-    //     host: '0.0.0.0',
-    //     port: 80
-    // }
-
-    // causing problem with the server
+    server:{
+        watch: {
+            usePolling: true
+        },
+        host: true
+    }
 });
