@@ -5,12 +5,19 @@ const code = params.get("code");
 
 
 if (!code) {
+    console.log("Redirecting to Spotify to authorize...");
     redirectToAuthCodeFlow(clientId);
 } else {
     const accessToken = await getAccessToken(clientId, code);
+    console.log("Client ID:", clientId);
+    console.log("Code:", code);
+    console.log("Access token:", accessToken);
     updateCurrentlyPlaying(accessToken);
     setInterval(() => updateCurrentlyPlaying(accessToken), 1000);
 }
+
+console.log("After the if statement Code:", code);
+console.log("After the if statement Access token:", accessToken);
 
 
 export async function redirectToAuthCodeFlow(clientId) {
@@ -57,7 +64,8 @@ export async function getAccessToken(clientId, code) {
     params.append("client_id", clientId);
     params.append("grant_type", "authorization_code");
     params.append("code", code);
-    params.append("redirect_uri", "hhttps://ilijakekovic.github.io/SpotifyTrackMe/callback");
+    // params.append("redirect_uri", "hhttps://ilijakekovic.github.io/SpotifyTrackMe/callback");
+    params.append("redirect_uri", "http://localhost:5173/callback");
     params.append("code_verifier", verifier);
 
     const result = await fetch("https://accounts.spotify.com/api/token", {
