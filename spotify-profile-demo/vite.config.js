@@ -9,6 +9,7 @@ export default defineConfig({
         target: 'esnext' // or 'es2022' to support top-level await
     },
     server:{
+        port: 5173,
         watch: {
             usePolling: true
         },
