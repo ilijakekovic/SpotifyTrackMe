@@ -26,5 +26,7 @@ Spotify Track Me is a tool to track your Spotify listening habits and generate i
     ```
 2. Open your browser and navigate to `http://localhost:3000`
 
+3. For the live version navigate to https://spotify-profile-demo.fly.dev 
+(currently the app is waiting for spotifies approval to expand the API so only white listed accounts are functional)
 ## License
 This project is licensed under the MIT License.

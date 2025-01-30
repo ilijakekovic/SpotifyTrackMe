@@ -8,8 +8,8 @@ export default defineConfig({
     build: {
         target: 'esnext' // or 'es2022' to support top-level await
     },
-    server:{
-        port: 5173,
+    server: {
+        port: 80,
         watch: {
             usePolling: true
         },
